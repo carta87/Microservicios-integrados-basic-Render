@@ -60,5 +60,5 @@ services:
     env: static
     rootDir: Frontend-proyecto-microservicios
     buildCommand: npm install && npm run build --prod
-    staticPublishPath: dist
+    staticPublishPath: dist/Frontend-proyecto-microservicios
     autoDeploy: true
