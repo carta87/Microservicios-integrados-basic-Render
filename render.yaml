@@ -1,5 +1,4 @@
 services:
-
   - type: web
     name: microservice-config
     env: docker
@@ -56,9 +55,10 @@ services:
     plan: free
     autoDeploy: true
 
-  - type: static
+  - type: web
     name: frontend-angular
+    env: static
     rootDir: Frontend-proyecto-microservicios
     buildCommand: npm install && npm run build --prod
-    staticPublishPath: dist/
+    staticPublishPath: dist
     autoDeploy: true
