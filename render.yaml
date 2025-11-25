@@ -55,7 +55,7 @@ services:
     plan: free
     autoDeploy: true
 
-  - type: web
+  - type: static
     name: frontend-angular
     rootDir: Frontend-proyecto-microservicios
     buildCommand: npm install && npm run build --prod
