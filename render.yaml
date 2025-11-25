@@ -55,8 +55,10 @@ services:
     plan: free
     autoDeploy: true
 
+  # ===== ANGULAR =====
   - type: web
     name: frontend-angular
+    env: node
     rootDir: Frontend-proyecto-microservicios
     buildCommand: npm install && npm run build --prod
     startCommand: npx serve -s dist
