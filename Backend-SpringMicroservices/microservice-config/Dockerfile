@@ -1,27 +1,33 @@
-# IMAGEN MODELO
-FROM openjdk:17-jdk-slim
+# ---------- BUILD STAGE ----------
+FROM eclipse-temurin:17-jdk-alpine AS build
 
-# Instalar curl
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+# Crea un directorio de trabajo
+WORKDIR /app
 
-# DEFINIR DIRECTORIO RAIZ DE NUESTRO CONTENEDOR
-WORKDIR /root
+# Copia los archivos de Maven/Gradle primero (para cache)
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
 
-# COPIAR Y PEGAR ARCHIVOS DENTRO DEL CONTENEDOR
-COPY ./pom.xml /root
-COPY ./.mvn /root/.mvn
-COPY ./mvnw /root
+# Descarga dependencias sin compilar aún (mejora tiempos de build)
+RUN ./mvnw dependency:go-offline -B
 
-EXPOSE 8888
+# Copia el código fuente completo
+COPY src src
 
-# DESCARGAR LAS DEPENDENCIAS
-RUN ./mvnw dependency:go-offline
+# Compila el proyecto
+RUN ./mvnw clean package -DskipTests
 
-# COPIAR EL CODIGO FUENTE DENTRO DEL CONTENEDOR
-COPY ./src /root/src
+# ---------- RUNTIME STAGE ----------
+FROM eclipse-temurin:17-jre-alpine
 
-# CONSTRUIR NUESTRA APLICACION
-RUN ./mvnw clean install -DskipTests -e
+WORKDIR /app
 
-# LEVANTAR NUESTRA APLICACION CUANDO EL CONTENEDOR INICIE
-ENTRYPOINT ["java", "-jar", "/root/target/microservice-config-1.0-SNAPSHOT.jar"]
+# Copia el JAR generado desde la etapa anterior
+COPY --from=build /app/target/*.jar app.jar
+
+# Exponer el puerto (Render lo detectará igual)
+EXPOSE 8080
+
+# Comando de ejecución
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
