@@ -12,16 +12,18 @@ jw:
 spring:
   application:
     name: micro-service-auth
+
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/secure_micro_services_DB
-    username: root
-    password: root
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://dpg-d4ieee4hg0os739sbkf0-a.virginia-postgres.render.com:5432/proyecto_microservicesdb
+    username: carta87
+    password: QxSTq1RBRRCrRQmD7qFUmYM87ASwGlM0
+
   jpa:
     hibernate:
       ddl-auto: update
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 eureka:
   instance:

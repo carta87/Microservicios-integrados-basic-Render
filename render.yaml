@@ -1,0 +1,113 @@
+services:
+  # ============================
+  # CONFIG SERVER
+  # ============================
+  - type: web
+    name: microservice-config
+    env: docker
+    rootDir: Backend-SpringMicroservices/microservice-config
+    dockerfilePath: Backend-SpringMicroservices/microservice-config/Dockerfile
+    plan: free
+    autoDeploy: true
+
+  # ============================
+  # EUREKA SERVER
+  # ============================
+  - type: web
+    name: microservice-eureka
+    env: docker
+    rootDir: Backend-SpringMicroservices/microservice-eureka
+    dockerfilePath: Backend-SpringMicroservices/microservice-eureka/Dockerfile
+    plan: free
+    autoDeploy: true
+    dependsOn:
+      - microservice-config
+
+  # ============================
+  # API GATEWAY
+  # ============================
+  - type: web
+    name: microservice-gateway
+    env: docker
+    rootDir: Backend-SpringMicroservices/microservice-gateway
+    dockerfilePath: Backend-SpringMicroservices/microservice-gateway/Dockerfile
+    plan: free
+    autoDeploy: true
+    dependsOn:
+      - microservice-config
+      - microservice-eureka
+
+  # ============================
+  # AUTH SERVICE
+  # ============================
+  - type: web
+    name: microservice-auth
+    env: docker
+    rootDir: Backend-SpringMicroservices/microservice-auth
+    dockerfilePath: Backend-SpringMicroservices/microservice-auth/Dockerfile
+    plan: free
+    autoDeploy: true
+    dependsOn:
+      - microservice-config
+      - microservice-eureka
+      - microservice-gateway
+
+  # ============================
+  # COURSE SERVICE
+  # ============================
+  - type: web
+    name: microservice-course
+    env: docker
+    rootDir: Backend-SpringMicroservices/microservice-course
+    dockerfilePath: Backend-SpringMicroservices/microservice-course/Dockerfile
+    plan: free
+    autoDeploy: true
+    dependsOn:
+      - microservice-config
+      - microservice-eureka
+      - microservice-gateway
+
+  # ============================
+  # REPORT SERVICE
+  # ============================
+  - type: web
+    name: microservice-report
+    env: docker
+    rootDir: Backend-SpringMicroservices/microservice-report
+    dockerfilePath: Backend-SpringMicroservices/microservice-report/Dockerfile
+    plan: free
+    autoDeploy: true
+    dependsOn:
+      - microservice-config
+      - microservice-eureka
+      - microservice-gateway
+
+  # ============================
+  # STUDENT SERVICE
+  # ============================
+  - type: web
+    name: microservice-student
+    env: docker
+    rootDir: Backend-SpringMicroservices/microservice-student
+    dockerfilePath: Backend-SpringMicroservices/microservice-student/Dockerfile
+    plan: free
+    autoDeploy: true
+    dependsOn:
+      - microservice-config
+      - microservice-eureka
+      - microservice-gateway
+
+  # ============================
+  # ANGULAR FRONTEND
+  # ============================
+  - type: web
+    name: frontend-angular
+    env: node
+    rootDir: Frontend-proyecto-microservicios
+    plan: free
+    buildCommand: npm install && npm run build --prod
+    startCommand: npx serve -s dist
+    autoDeploy: true
+    nodeVersion: 18
+    dependsOn:
+      - microservice-gateway

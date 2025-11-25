@@ -5,11 +5,13 @@ server:
 spring:
   application:
     name: micro-service-course
+
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/coursesDB
-    username: postgres
-    password: root
+    url: jdbc:postgresql://dpg-d4ieee4hg0os739sbkf0-a.virginia-postgres.render.com:5432/proyecto_microservicesdb
+    username: carta87
+    password: QxSTq1RBRRCrRQmD7qFUmYM87ASwGlM0
+
   jpa:
     hibernate:
       ddl-auto: update
