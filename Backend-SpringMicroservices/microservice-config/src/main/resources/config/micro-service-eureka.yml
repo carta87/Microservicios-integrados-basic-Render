@@ -1,0 +1,85 @@
+server:
+  port: 8080
+
+jw:
+  secret:
+    key: 586E3272357538782F413F4428472B4B6250655368566B597033733676397924
+
+spring:
+  application:
+    name: micro-service-api-gateway
+
+  cloud:
+    gateway:
+
+      discovery:
+        locator:
+          enabled: true
+
+      global-cors:
+        cors-configurations:
+          '[/**]': &global-cors-config
+            allowedOrigins:
+              - "http://localhost:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - Content-Type
+              - Authorization
+              - Accept
+            allowCredentials: true
+
+      routes:
+
+        # =====================
+        # STUDENT
+        # =====================
+        - id: student-micro-service
+          uri: lb://micro-service-student
+          predicates:
+            - Path=/student-micro/**, /micro-services/student-micro/**
+          filters:
+            - AuthenticationFilter
+            - RewritePath=/.*student-micro/(?<path>.*), /${path}
+
+        # =====================
+        # COURSE
+        # =====================
+        - id: course-micro-service
+          uri: lb://micro-service-course
+          predicates:
+            - Path=/course-micro/**, /micro-services/course-micro/**
+          filters:
+            - AuthenticationFilter
+            - RewritePath=/.*course-micro/(?<path>.*), /${path}
+
+        # =====================
+        # AUTH
+        # =====================
+        - id: auth-micro-service
+          uri: lb://micro-service-auth
+          predicates:
+            - Path=/auth-micro/**, /micro-services/auth-micro/**
+          filters:
+            - RewritePath=/auth-micro/(?<path>.*), /${path}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+springdoc:
+  cache:
+    disabled: true
+  swagger-ui:
+    use-root-path: true
+  api-docs:
+    version: openapi_3_1

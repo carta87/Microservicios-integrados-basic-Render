@@ -18,12 +18,24 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+  cloud:
+    config:
+      uri: https://microservice-config.onrender.com
+      fail-fast: true
+      retry:
+        initial-interval: 2000
+        max-attempts: 20
+        max-interval: 10000
+        multiplier: 1.5
+
 eureka:
   instance:
-    hostname: localhost
+    prefer-ip-address: true  # Render no usa localhost
   client:
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
-      defaultZooServer: http://localhost:8761/eureka
+      defaultZone: https://microservice-eureka.onrender.com/eureka/
 
 logging:
   pattern:
@@ -33,7 +45,6 @@ logging:
     org.springframework.http.server.reactive: TRACE
 
 springdoc:
-  version: '@springdoc.version@'
   api-docs:
     version: openapi_3_1
   cache:
