@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="microservice-config" />
       </profile>
       <profile name="Annotation profile for SpringMicroservices" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -21,7 +22,6 @@
         <module name="microservice-gateway" />
         <module name="microservice-student" />
         <module name="microservice-report" />
-        <module name="microservice-config" />
         <module name="microservice-auth" />
         <module name="library-entidades" />
         <module name="microservice-course" />
@@ -38,7 +38,7 @@
       <module name="Spring-Boot-Jasper-Report" options="-parameters" />
       <module name="library-entidades" options="-parameters" />
       <module name="microservice-auth" options="-parameters" />
-      <module name="microservice-config" options="-parameters" />
+      <module name="microservice-config" options="" />
       <module name="microservice-course" options="-parameters" />
       <module name="microservice-eureka" options="-parameters" />
       <module name="microservice-gateway" options="-parameters" />
