@@ -3,7 +3,7 @@ server:
 
 jw:
   secret:
-    key: ${JWT_SECRET_KEY}   # Mantener en Config Server o Render env vars
+    key: 586E3272357538782F413F4428472B4B6250655368566B597033733676397924
 
 spring:
   application:
