@@ -2,4 +2,4 @@ spring:
   application:
     name: micro-service-eureka
   config:
-    import: "optional:configserver:https://microservice-config.onrender.com"
+    import: "optional:configserver:https://microservice-config-2irc.onrender.com"

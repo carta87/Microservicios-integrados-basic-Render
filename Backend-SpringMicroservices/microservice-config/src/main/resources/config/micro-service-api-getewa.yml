@@ -9,6 +9,9 @@ spring:
   application:
     name: micro-service-api-getewa
 
+  config:
+    import: "optional:configserver:https://microservice-config-2irc.onrender.com"
+
   cloud:
     gateway:
       discovery:
@@ -17,7 +20,7 @@ spring:
 
       globalcors:
         corsConfigurations:
-          '[/**]':
+          "[/**]":
             allowedOrigins:
               - "https://frontend-microservicios.onrender.com"
               - "http://localhost:4200"
@@ -26,10 +29,6 @@ spring:
             allowCredentials: true
 
       routes:
-
-        # ============================
-        # Student Microservice
-        # ============================
         - id: student-micro-service
           uri: lb://micro-service-student
           predicates:
@@ -38,9 +37,6 @@ spring:
             - AuthenticationFilter
             - RewritePath=/micro-services/student-micro/(?<path>.*), /${path}
 
-        # ============================
-        # Course Microservice
-        # ============================
         - id: course-micro-service
           uri: lb://micro-service-course
           predicates:
@@ -49,9 +45,6 @@ spring:
             - AuthenticationFilter
             - RewritePath=/micro-services/course-micro/(?<path>.*), /${path}
 
-        # ============================
-        # Auth Microservice
-        # ============================
         - id: auth-micro-service
           uri: lb://micro-service-auth
           predicates:
@@ -60,9 +53,6 @@ spring:
             - AuthenticationFilter
             - RewritePath=/micro-services/auth-micro/(?<path>.*), /${path}
 
-        # ============================
-        # OpenAPI Remote Demo
-        # ============================
         - id: openapi-proxy
           uri: https://demos.springdoc.org
           predicates:
@@ -70,9 +60,6 @@ spring:
           filters:
             - RewritePath=/micro-services/v3/api-docs/(?<path>.*), /micro-services/${path}/v3/api-docs
 
-        # ============================
-        # OpenAPI Local Gateway Docs
-        # ============================
         - id: openapi
           uri: http://localhost:${server.port}
           predicates:
@@ -85,7 +72,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: https://microservice-eureka.onrender.com/eureka/
+      defaultZone: https://microservice-eureka-v1.onrender.com/eureka/
 
 logging:
   pattern:
