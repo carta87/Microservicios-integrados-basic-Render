@@ -3,31 +3,26 @@ FROM eclipse-temurin:17-jdk-alpine AS build
 
 WORKDIR /app
 
-# Copiar configuraciones Maven
-COPY pom.xml .
-COPY .mvn .mvn
 COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
 
-# Dar permisos de ejecución
 RUN chmod +x mvnw
-
-# Descargar dependencias
 RUN ./mvnw dependency:go-offline -B
 
-# Copiar código fuente
-COPY src ./src
+COPY src src
 
-# Construir la aplicación
+# Generar JAR ejecutable de Spring Boot
 RUN ./mvnw clean package -DskipTests
-
 
 # ---------- RUNTIME STAGE ----------
 FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-COPY --from=build /app/target/*.jar app.jar
+# Copiar JAR generado por Spring Boot plugin
+COPY --from=build /app/target/microservice-gateway-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java","-jar","/app/app.jar"]
