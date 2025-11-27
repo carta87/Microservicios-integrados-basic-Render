@@ -1,6 +1,5 @@
 spring:
   application:
     name: micro-service-api-getewa
-
   config:
     import: "optional:configserver:https://microservice-config-2irc.onrender.com"
