@@ -7,10 +7,10 @@ spring:
 
 eureka:
   instance:
-    hostname: localhost   # 👈 Eureka funciona localmente dentro del contenedor
-    preferIpAddress: true
+    hostname: ${RENDER_EXTERNAL_URL}   # Render pone la URL real en tiempo de ejecución
+
   client:
-    register-with-eureka: false
+    register-with-eureka: false        # Eureka NO se registra a sí mismo
     fetch-registry: false
     service-url:
-      defaultZone: https://microservice-eureka-v1.onrender.com/eureka/
+      defaultZone: ${RENDER_EXTERNAL_URL}/eureka/
