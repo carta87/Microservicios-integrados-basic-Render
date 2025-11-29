@@ -12,7 +12,6 @@ RUN ./mvnw dependency:go-offline -B
 
 COPY src src
 
-# Generar JAR ejecutable de Spring Boot
 RUN ./mvnw clean package -DskipTests
 
 # ---------- RUNTIME STAGE ----------
@@ -22,7 +21,7 @@ WORKDIR /app
 
 COPY --from=build /app/target/*.jar app.jar
 
-ENV PORT=8080
+# Render define PORT automáticamente, NO lo sobrescribas
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
