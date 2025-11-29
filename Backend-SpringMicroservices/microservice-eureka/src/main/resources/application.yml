@@ -1,5 +1,16 @@
+server:
+  port: 8761
+
 spring:
   application:
     name: micro-service-eureka
-  config:
-    import: "optional:configserver:https://microservice-config-2irc.onrender.com"
+
+eureka:
+  instance:
+    hostname: ${RENDER_EXTERNAL_URL}
+
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: ${RENDER_EXTERNAL_URL}/eureka/
