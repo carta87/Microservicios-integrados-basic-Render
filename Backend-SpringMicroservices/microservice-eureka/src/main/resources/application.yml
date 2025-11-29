@@ -1,5 +1,14 @@
+server:
+  port: ${PORT:8080}
+
 spring:
   application:
     name: micro-service-eureka
-  config:
-    import: optional:configserver:https://microservice-config-2irc.onrender.com
+  cloud:
+    config:
+      enabled: false   # Eureka NO usa Config Server
+
+eureka:
+  client:
+    register-with-eureka: false   # No se registra a sí mismo
+    fetch-registry: false
