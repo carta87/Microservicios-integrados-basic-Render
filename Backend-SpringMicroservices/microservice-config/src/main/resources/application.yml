@@ -9,6 +9,6 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/carta87/Microservicios-integrados-basic-Render
+          uri: https://github.com/carta87/configuraciones-microservicios
           search-paths: configurations
-          default-label: main
+          default-label: render-basic
