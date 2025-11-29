@@ -9,5 +9,5 @@ spring:
       server:
         git:
           uri: https://github.com/carta87/Microservicios-integrados-basic-Render
-          search-paths: config
+          search-paths: configurations
           default-label: main
