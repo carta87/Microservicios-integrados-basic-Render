@@ -1,5 +1,16 @@
+
+  port: ${PORT}
+
 spring:
   application:
     name: micro-service-api-getewa
+
   config:
     import: "optional:configserver:https://microservice-config-2irc.onrender.com"
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: https://microservice-eureka-xxxx.onrender.com/eureka/

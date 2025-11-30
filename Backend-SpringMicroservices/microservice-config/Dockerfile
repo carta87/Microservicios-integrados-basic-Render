@@ -3,7 +3,6 @@ FROM eclipse-temurin:17-jdk-alpine AS build
 
 WORKDIR /app
 
-# Copiar archivos necesarios para que Maven pueda resolver dependencias
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
@@ -28,7 +27,6 @@ WORKDIR /app
 # Copiar el JAR construido
 COPY --from=build /app/target/*jar app.jar
 
-# Importante: NO uses un puerto fijo
-EXPOSE $PORT
+EXPOSE 8080
 
 ENTRYPOINT ["sh", "-c", "java -jar /app/app.jar"]
