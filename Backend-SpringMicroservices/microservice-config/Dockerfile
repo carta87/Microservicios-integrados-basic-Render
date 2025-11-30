@@ -20,7 +20,6 @@ COPY src src
 # Construir el JAR
 RUN ./mvnw clean package -DskipTests
 
-
 # ---------- RUNTIME STAGE ----------
 FROM eclipse-temurin:17-jre-alpine
 
@@ -29,6 +28,7 @@ WORKDIR /app
 # Copiar el JAR construido
 COPY --from=build /app/target/*jar app.jar
 
-EXPOSE 8080
+# Importante: NO uses un puerto fijo
+EXPOSE $PORT
 
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["sh", "-c", "java -jar /app/app.jar"]
